@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bootstrap-resources
+  name: infra-resources
   namespace: argocd
 spec:
   destination:
@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: bootstrap-resources
+    path: infra-resources
     repoURL: https://github.com/vpbonev/infra
     targetRevision: HEAD
     helm:

@@ -7,16 +7,16 @@ The goal is to setup a production like set of workloads ( observability, securit
 ## Workloads
 
 Workloads are deployed through ArgoCD in an app-of-apps style deployment.
-Configuration of the application is done via the `bootstrap` root app that has it's own configuration within `values.yaml`. This is propagated into the child apps.
+Configuration of the application is done via the `infra` root app that has it's own configuration within `values.yaml`. This is propagated into the child apps.
 
-### bootstrap
+### infra
 
 This folder contains application templates. You can either add a helm chart or git repository as the source. You can copy an existing application or import some you've written before for argocd.
 
 
-#### bootstrap-resources
+#### infra-resources
 
-This folder contains the resources that are used by the bootstrap application. Such things might be application specific resources like network policies, ingress settings or service accounts. The idea is that this folder is continuously and automatically synced with the cluster.
+This folder contains the resources that are used by the infra application. Such things might be application specific resources like network policies, ingress settings or service accounts. The idea is that this folder is continuously and automatically synced with the cluster.
 **It helps to get around the problem of having to make a another gitOps repo just for settings of an app.**
 
 
@@ -51,8 +51,8 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
 ```
 
-- Add this repository as a bootstrap cluster
+- Add this repository as a infra cluster
 ```
-kubectl apply -f bootstrap.yaml
+kubectl apply -f infra.yaml
 ```
 Port-forward via k9s if required for local check-ups
