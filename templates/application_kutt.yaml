@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: kutt
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+ project: default
+ source:
+  repoURL: 'https://github.com/vpbonev/kutt-chart'
+  #targetRevision: 2.74.0
+  path: .
+  targetRevision: HEAD
+  helm:
+    valueFiles:
+      - values.yaml
+    parameters:
+      - name: storageclass
+        value: {{ .Values.kutt.storageClass }}
+ destination:
+  server: 'https://kubernetes.default.svc'
+  namespace: kutt
+ syncPolicy:
+  automated: {}
+  syncOptions:
+    - CreateNamespace=true
